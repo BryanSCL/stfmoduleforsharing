@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Slip, Trip & Fall Prevention | AnjouHealth Training</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:     #1e4d1e;
+      --primary-lt:  #2d6a2d;
+      --primary-xlt: #3d8c3d;
+      --accent:      #8DC63F;
+      --accent-dk:   #6aaa1a;
+      --accent-lt:   #b2e066;
+      --success:     #4a8c1c;
+      --danger:      #d63b2f;
+      --warn:        #e67e22;
+      --bg:          #f2f5f0;
+      --bg2:         #e8ede4;
+      --sidebar-bg:  #ffffff;
+      --card:        #ffffff;
+      --text:        #1a2a1a;
+      --text2:       #3a4a3a;
+      --muted:       #6a7d6a;
+      --border:      #d4ddd0;
+      --border-lt:   #e8ede4;
+      --topbar-h:    58px;
+      --sidebar-w:   284px;
+      --radius:      10px;
+      --radius-lg:   14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════════
+       TOP BAR
+    ═══════════════════════════════════ */
+    #topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--topbar-h);
+      background: var(--primary);
+      display: flex; align-items: center;
+      padding: 0 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.25);
+      gap: 16px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .topbar-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .topbar-logo img { height: 30px; width: auto; display: block; }
+    .topbar-logo-text {
+      font-size: .72rem; font-weight: 600;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .6px; text-transform: uppercase;
+      border-left: 1px solid rgba(255,255,255,.2);
+      padding-left: 10px; white-space: nowrap;
+    }
+    .topbar-sep { width: 1px; height: 28px; background: rgba(255,255,255,.15); flex-shrink: 0; }
+    .topbar-module {
+      font-size: .85rem; font-weight: 500;
+      color: rgba(255,255,255,.75); flex: 1;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .timer-box {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius); padding: 6px 16px;
+      font-size: .8rem; color: #fff; flex-shrink: 0;
+    }
+    .timer-item { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+    .timer-val { font-size: .95rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent-lt); }
+    .timer-lbl { font-size: .6rem; opacity: .6; text-transform: uppercase; letter-spacing: .6px; }
+    .timer-divider { opacity: .25; font-size: 1rem; }
+    #btn-back {
+      background: rgba(141,198,63,.15); border: 1px solid rgba(141,198,63,.35);
+      color: var(--accent-lt); border-radius: var(--radius); padding: 7px 16px;
+      font-size: .82rem; font-weight: 600; cursor: pointer;
+      transition: background .15s; white-space: nowrap; text-decoration: none;
+      flex-shrink: 0;
+    }
+    #btn-back:hover { background: rgba(141,198,63,.28); }
+
+    /* ═══════════════════════════════════
+       LAYOUT SHELL
+    ═══════════════════════════════════ */
+    #shell {
+      display: flex;
+      padding-top: var(--topbar-h);
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════════
+       SIDEBAR
+    ═══════════════════════════════════ */
+    #sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: var(--topbar-h);
+      height: calc(100vh - var(--topbar-h));
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+      box-shadow: 2px 0 12px rgba(0,0,0,.04);
+    }
+
+    .sb-header {
+      padding: 20px 18px 16px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(150deg, var(--primary) 0%, var(--primary-lt) 100%);
+      color: #fff;
+      position: relative; overflow: hidden;
+    }
+    .sb-header::after {
+      content: '';
+      position: absolute; bottom: -20px; right: -20px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(141,198,63,.12);
+    }
+    .sb-title {
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--accent-lt); margin-bottom: 5px;
+    }
+    .sb-module-name { font-size: .92rem; font-weight: 700; line-height: 1.35; }
+
+    .sb-score-row {
+      display: flex; justify-content: space-between; align-items: center; margin-top: 14px;
+      background: rgba(255,255,255,.1); border-radius: 8px; padding: 8px 10px;
+    }
+    .sb-score-val { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+    .sb-score-lbl { font-size: .68rem; opacity: .75; text-align: right; line-height: 1.4; }
+
+    .sb-prog-wrap { padding: 14px 18px; border-bottom: 1px solid var(--border-lt); background: #fafcf8; }
+    .sb-prog-label {
+      display: flex; justify-content: space-between;
+      font-size: .72rem; color: var(--muted); margin-bottom: 7px; font-weight: 500;
+    }
+    .sb-prog-bar { height: 7px; background: var(--border); border-radius: 5px; overflow: hidden; }
+    .sb-prog-fill {
+      height: 100%; border-radius: 5px;
+      background: linear-gradient(90deg, var(--accent-dk), var(--accent));
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+
+    .sb-chapters { padding: 8px 0; flex: 1; }
+    .sb-ch-label {
+      font-size: .65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .8px; color: var(--muted);
+      padding: 8px 18px 4px; 
+    }
+    .sb-chapter {
+      display: flex; align-items: flex-start; gap: 11px;
+      padding: 10px 18px; cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: background .15s, border-color .15s;
+    }
+    .sb-chapter:hover { background: #f3f7ef; }
+    .sb-chapter.active { background: #edf5e4; border-left-color: var(--accent); }
+    .sb-chapter.locked { opacity: .5; cursor: not-allowed; }
+
+    .ch-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700; flex-shrink: 0;
+      background: var(--bg2); color: var(--muted);
+      border: 1.5px solid var(--border);
+    }
+    .sb-chapter.active .ch-num { background: var(--accent); color: var(--primary); border-color: var(--accent); }
+    .sb-chapter.passed .ch-num { background: var(--success); color: #fff; border-color: var(--success); }
+    .sb-chapter.locked .ch-num { background: #e8e8e8; border-color: #ddd; }
+
+    .ch-info { flex: 1; min-width: 0; }
+    .ch-name { font-size: .83rem; font-weight: 600; color: var(--text); line-height: 1.35; }
+    .ch-status { font-size: .68rem; margin-top: 2px; font-weight: 500; }
+    .status-notstarted { color: var(--muted); }
+    .status-inprogress { color: var(--warn); }
+    .status-passed     { color: var(--success); }
+    .status-failed     { color: var(--danger); }
+    .status-locked     { color: #bbb; }
+
+    /* ═══════════════════════════════════
+       MAIN CONTENT
+    ═══════════════════════════════════ */
+    #main { flex: 1; min-width: 0; }
+
+    /* ── Landing Section ── */
+    #landing {
+      background: linear-gradient(140deg, #152e15 0%, #1e4d1e 45%, #2d6a2d 100%);
+      color: #fff;
+      padding: 44px 44px 40px;
+      position: relative; overflow: hidden;
+    }
+    #landing::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 260px; height: 260px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(141,198,63,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #landing::after {
+      content: '';
+      position: absolute; bottom: -40px; left: 30%;
+      width: 180px; height: 180px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(141,198,63,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .landing-breadcrumb {
+      font-size: .75rem; opacity: .55; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .landing-title {
+      font-size: 2rem; font-weight: 800; line-height: 1.15;
+      margin-bottom: 14px; letter-spacing: -.3px;
+    }
+    .landing-title span { color: var(--accent); }
+    .landing-desc {
+      font-size: .95rem; opacity: .82; max-width: 620px; line-height: 1.65;
+      margin-bottom: 26px;
+    }
+    .landing-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+    .meta-chip {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      border-radius: 30px; padding: 6px 14px; font-size: .8rem;
+      backdrop-filter: blur(4px);
+    }
+    .meta-chip-icon { font-size: 1rem; }
+
+    .audience-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .aud-chip {
+      background: rgba(141,198,63,.15); border: 1px solid rgba(141,198,63,.3);
+      color: var(--accent-lt); border-radius: 6px;
+      padding: 5px 13px; font-size: .76rem; font-weight: 600;
+    }
+
+    #btn-start-module {
+      background: var(--accent); color: var(--primary);
+      border: none; border-radius: var(--radius);
+      padding: 14px 36px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all .2s;
+      box-shadow: 0 4px 20px rgba(141,198,63,.45);
+      letter-spacing: .2px; position: relative; z-index: 1;
+    }
+    #btn-start-module:hover {
+      background: var(--accent-lt); transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(141,198,63,.5);
+    }
+
+    /* ── Outcomes ── */
+    #outcomes {
+      background: var(--card); padding: 36px 44px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-hd {
+      font-size: 1rem; font-weight: 700; color: var(--primary);
+      margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+    }
+    .section-hd::before {
+      content: ''; display: block;
+      width: 4px; height: 22px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-dk));
+      border-radius: 3px;
+    }
+    .outcomes-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 10px;
+    }
+    .outcome-item {
+      display: flex; align-items: flex-start; gap: 11px;
+      background: #f6fbf0; border: 1px solid #d8ecc8;
+      border-radius: var(--radius); padding: 13px 15px;
+      transition: box-shadow .15s;
+    }
+    .outcome-item:hover { box-shadow: 0 2px 10px rgba(141,198,63,.18); }
+    .outcome-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .outcome-text { font-size: .85rem; color: var(--text2); line-height: 1.5; font-weight: 500; }
+
+    /* ── Chapter Sections ── */
+    .chapter-section {
+      padding: 36px 44px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+    .chapter-section:nth-child(even) { background: #fafcf8; }
+    .chapter-section.locked-section {
+      opacity: .55; position: relative;
+    }
+    .chapter-section.locked-section > * {
+      pointer-events: none;
+    }
+    .chapter-section.locked-section::after {
+      content: '🔒 Complete the previous chapter to unlock this one';
+      position: absolute; inset: 0;
+      background: rgba(242,245,240,.88);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .92rem; font-weight: 600; color: var(--muted);
+      letter-spacing: .1px; z-index: 2;
+      pointer-events: none;
+    }
+
+    .chapter-hd { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .chapter-num-badge {
+      background: linear-gradient(135deg, var(--primary), var(--primary-lt));
+      color: #fff; border-radius: 7px; padding: 4px 12px;
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .8px; box-shadow: 0 2px 6px rgba(30,77,30,.25);
+    }
+    .chapter-title { font-size: 1.12rem; font-weight: 700; color: var(--text); }
+    .chapter-desc {
+      font-size: .875rem; color: var(--muted); margin-bottom: 22px;
+      line-height: 1.6; max-width: 660px;
+    }
+
+    /* ── Video Player ── */
+    .video-wrap {
+      background: #0c160c;
+      border-radius: var(--radius-lg); overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 24px rgba(0,0,0,.14);
+      border: 1px solid rgba(141,198,63,.2);
+      position: relative;
+    }
+    .video-label {
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-lt) 100%);
+      color: #fff; padding: 10px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: .8rem;
+    }
+    .video-label-left { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+    .video-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(141,198,63,.6);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; } 50% { opacity: .5; }
+    }
+    .video-placeholder {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0c1f0c 0%, #1a3d1a 60%, #2d6a2d 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: rgba(255,255,255,.45); gap: 12px; position: relative;
+    }
+    .video-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(141,198,63,.08) 0%, transparent 65%);
+    }
+    .video-placeholder-icon { font-size: 3.5rem; opacity: .45; }
+    .video-placeholder-text { font-size: .85rem; opacity: .5; }
+    video { width: 100%; display: block; max-height: 480px; }
+    .video-done-badge {
+      display: none; position: absolute; top: 52px; right: 14px;
+      background: var(--success); color: #fff;
+      border-radius: 20px; padding: 4px 14px;
+      font-size: .73rem; font-weight: 700;
+      align-items: center; gap: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .video-done-badge.show { display: flex; }
+
+    /* ── MCQ ── */
+    .mcq-section {
+      background: #f6fbf0;
+      border: 1px solid #d8ecc8;
+      border-radius: var(--radius-lg); padding: 24px;
+    }
+    .mcq-hd {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #d8ecc8;
+    }
+    .mcq-title {
+      font-size: .95rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .mcq-pass-req {
+      font-size: .72rem; color: var(--muted);
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 20px; padding: 3px 12px; font-weight: 500;
+    }
+    .question-block { margin-bottom: 22px; }
+    .q-num {
+      color: var(--accent-dk); font-size: .72rem;
+      text-transform: uppercase; letter-spacing: .6px;
+      margin-bottom: 5px; font-weight: 700;
+    }
+    .q-text {
+      font-size: .9rem; font-weight: 600; color: var(--text);
+      margin-bottom: 12px; line-height: 1.5;
+    }
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .option {
+      display: flex; align-items: center; gap: 11px;
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 11px 15px;
+      cursor: pointer; transition: all .15s;
+      font-size: .875rem; user-select: none;
+    }
+    .option:hover { border-color: var(--accent); background: #f6fbf0; transform: translateX(2px); }
+    .option input[type=radio] { accent-color: var(--accent-dk); flex-shrink: 0; }
+    .option.correct { border-color: var(--success); background: #edfaf0; }
+    .option.incorrect { border-color: var(--danger); background: #fdf0ef; }
+    .option.disabled { pointer-events: none; }
+
+    .q-feedback {
+      margin-top: 8px; padding: 9px 13px;
+      border-radius: 7px; font-size: .82rem; display: none;
+    }
+    .q-feedback.show { display: block; }
+    .q-feedback.fb-correct { background: #edfaf0; border-left: 3px solid var(--success); color: #1a5e1a; }
+    .q-feedback.fb-incorrect { background: #fdf0ef; border-left: 3px solid var(--danger); color: #8b1c12; }
+
+    .mcq-submit { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
+    .btn-submit-quiz {
+      background: linear-gradient(135deg, var(--primary), var(--primary-lt));
+      color: #fff; border: none; border-radius: var(--radius);
+      padding: 11px 30px; font-size: .9rem; font-weight: 600;
+      cursor: pointer; transition: all .15s;
+      box-shadow: 0 3px 10px rgba(30,77,30,.25);
+    }
+    .btn-submit-quiz:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-submit-quiz:disabled { background: #c8d4c0; cursor: not-allowed; box-shadow: none; transform: none; }
+    .btn-retry {
+      background: transparent; color: var(--primary);
+      border: 1.5px solid var(--primary-lt); border-radius: var(--radius);
+      padding: 10px 22px; font-size: .9rem; font-weight: 600;
+      cursor: pointer; display: none; transition: all .15s;
+    }
+    .btn-retry:hover { background: #f0f7ec; }
+    .btn-retry.show { display: inline-flex; }
+
+    .quiz-result {
+      padding: 14px 18px; border-radius: var(--radius);
+      font-weight: 700; font-size: .92rem;
+      display: none; margin-top: 18px;
+      align-items: center; gap: 10px;
+    }
+    .quiz-result.show { display: flex; }
+    .quiz-result.pass { background: #edfaf0; color: #1a5e1a; border: 1px solid #a3d9b0; }
+    .quiz-result.fail { background: #fdf0ef; color: #8b1c12; border: 1px solid #f4c7c3; }
+
+    .unlock-next {
+      background: linear-gradient(135deg, var(--success), var(--accent-dk));
+      color: #fff; border: none; border-radius: var(--radius);
+      padding: 13px 30px; font-size: .9rem; font-weight: 700;
+      cursor: pointer; margin-top: 20px; display: none;
+      align-items: center; gap: 8px;
+      box-shadow: 0 4px 14px rgba(74,140,28,.35);
+      transition: all .2s;
+    }
+    .unlock-next.show { display: inline-flex; }
+    .unlock-next:hover { filter: brightness(1.08); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(74,140,28,.4); }
+
+    /* ── PDF Download ── */
+    #pdf-section {
+      background: var(--card); padding: 36px 44px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pdf-card {
+      background: linear-gradient(140deg, #152e15 0%, #1e4d1e 50%, #2d6a2d 100%);
+      border-radius: var(--radius-lg); padding: 30px 32px;
+      display: flex; align-items: center; gap: 24px;
+      flex-wrap: wrap; position: relative; overflow: hidden;
+      box-shadow: 0 6px 24px rgba(30,77,30,.2);
+    }
+    .pdf-card::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: rgba(141,198,63,.12);
+    }
+    .pdf-icon { font-size: 3.5rem; flex-shrink: 0; filter: drop-shadow(0 2px 6px rgba(0,0,0,.3)); }
+    .pdf-info { flex: 1; color: #fff; min-width: 200px; position: relative; z-index: 1; }
+    .pdf-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 7px; }
+    .pdf-info p { font-size: .85rem; opacity: .78; line-height: 1.55; }
+    .btn-download {
+      background: var(--accent); color: var(--primary);
+      border: none; border-radius: var(--radius); padding: 12px 28px;
+      font-size: .9rem; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: all .2s; text-decoration: none; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(141,198,63,.4);
+      position: relative; z-index: 1;
+    }
+    .btn-download:hover { background: var(--accent-lt); transform: translateY(-1px); }
+    .pdf-viewed-badge {
+      background: rgba(141,198,63,.2); color: var(--accent-lt);
+      border: 1px solid rgba(141,198,63,.35);
+      border-radius: 5px; padding: 3px 10px;
+      font-size: .72rem; font-weight: 700;
+      margin-top: 8px; display: none;
+    }
+    .pdf-viewed-badge.show { display: inline-block; }
+
+    /* ── Completion Screen ── */
+    #completion-screen {
+      display: none; padding: 64px 44px;
+      text-align: center; background: var(--card);
+    }
+    #completion-screen.show { display: block; }
+    .comp-icon { font-size: 5rem; margin-bottom: 16px; }
+    .comp-title { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+    .comp-sub { font-size: 1rem; color: var(--muted); margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+    .comp-stats { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
+    .comp-stat {
+      background: #f6fbf0; border: 1px solid #d8ecc8;
+      border-radius: var(--radius-lg); padding: 22px 32px; min-width: 140px;
+      box-shadow: 0 2px 10px rgba(141,198,63,.1);
+    }
+    .comp-stat-val { font-size: 2rem; font-weight: 800; color: var(--primary); }
+    .comp-stat-lbl { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-top: 5px; }
+    .comp-timestamp { font-size: .82rem; color: var(--muted); margin-bottom: 30px; }
+    .comp-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .comp-btn {
+      padding: 12px 28px; border-radius: var(--radius); border: none;
+      font-size: .9rem; font-weight: 700; cursor: pointer;
+      transition: all .15s; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .comp-btn-primary { background: var(--primary); color: #fff; box-shadow: 0 3px 10px rgba(30,77,30,.25); }
+    .comp-btn-accent  { background: var(--accent); color: var(--primary); box-shadow: 0 3px 10px rgba(141,198,63,.3); }
+    .comp-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+    /* Skip warning toast */
+    #skip-toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      background: #c0392b; color: #fff;
+      padding: 12px 24px; border-radius: var(--radius);
+      font-size: .88rem; font-weight: 600;
+      z-index: 999; display: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,.25);
+      align-items: center; gap: 8px;
+    }
+    #skip-toast.show { display: flex; }
+
+    /* Scrollbar */
+    #sidebar::-webkit-scrollbar { width: 4px; }
+    #sidebar::-webkit-scrollbar-thumb { background: #c8d4c0; border-radius: 4px; }
+    #sidebar::-webkit-scrollbar-track { background: transparent; }
+
+    @media (max-width: 900px) {
+      :root { --sidebar-w: 220px; }
+      .landing-title { font-size: 1.5rem; }
+      .chapter-section { padding: 26px 22px; }
+      #landing, #outcomes, #pdf-section, #completion-screen { padding-left: 22px; padding-right: 22px; }
+    }
+    @media (max-width: 680px) {
+      #sidebar { display: none; }
+      #main { width: 100%; }
+      .timer-box { display: none; }
+      #landing { padding: 28px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div id="topbar">
+  <div class="topbar-logo">
+    <img src="data:image/png;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/9k=" alt="AnjouHealth" style="height:34px;width:auto;">
+    <span class="topbar-logo-text">Training Portal</span>
+  </div>
+  <div class="topbar-sep"></div>
+  <div class="topbar-module">Slip, Trip &amp; Fall Prevention</div>
+
+  <div class="timer-box">
+    <div class="timer-item">
+      <div class="timer-val" id="est-time">50 min</div>
+      <div class="timer-lbl">Estimated</div>
+    </div>
+    <div class="timer-divider">|</div>
+    <div class="timer-item">
+      <div class="timer-val" id="elapsed-time">00:00</div>
+      <div class="timer-lbl">Time Spent</div>
+    </div>
+  </div>
+
+  <a href="index.html" id="btn-back">← Dashboard</a>
+</div>
+
+<!-- ═══ SHELL ═══ -->
+<div id="shell">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <nav id="sidebar">
+    <div class="sb-header">
+      <div class="sb-title">Current Module</div>
+      <div class="sb-module-name">Slip, Trip &amp; Fall Prevention</div>
+      <div class="sb-score-row">
+        <div class="sb-score-val" id="sb-score">—</div>
+        <div class="sb-score-lbl">Overall<br>Score</div>
+      </div>
+    </div>
+
+    <div class="sb-prog-wrap">
+      <div class="sb-prog-label">
+        <span>Progress</span>
+        <span id="sb-pct">0%</span>
+      </div>
+      <div class="sb-prog-bar">
+        <div class="sb-prog-fill" id="sb-prog-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="sb-chapters" id="sb-chapters">
+      <!-- Populated by JS -->
+    </div>
+  </nav>
+
+  <!-- ═══ MAIN ═══ -->
+  <div id="main">
+
+    <!-- Landing -->
+    <div id="landing">
+      <div class="landing-breadcrumb">Dashboard › Required Modules › Slip, Trip &amp; Fall Prevention</div>
+      <div class="landing-title">Slip, Trip &amp; <span>Fall Prevention</span></div>
+      <div class="landing-desc">
+        This module equips workers with practical knowledge to prevent slip, trip, and fall incidents in high-risk environments. Participants learn to recognise hazards, understand risk factors, and apply structured thinking to make safer decisions.
+      </div>
+      <div class="landing-meta">
+        <div class="meta-chip"><span class="meta-chip-icon">🕐</span> 50–60 minutes</div>
+        <div class="meta-chip"><span class="meta-chip-icon">📋</span> 6 Chapters</div>
+        <div class="meta-chip"><span class="meta-chip-icon">🎯</span> 30 MCQ Questions</div>
+        <div class="meta-chip"><span class="meta-chip-icon">🏆</span> Pass mark: 70%</div>
+      </div>
+      <div style="font-size:.82rem;color:rgba(255,255,255,.7);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Target Audience</div>
+      <div class="audience-chips">
+        <span class="aud-chip">Frontline Workers</span>
+        <span class="aud-chip">Contractors</span>
+        <span class="aud-chip">Supervisors</span>
+        <span class="aud-chip">High-Risk Environments</span>
+      </div>
+      <button id="btn-start-module">▶ Start Module</button>
+      <div id="resume-note" style="display:none; margin-top:12px; font-size:.82rem; color:rgba(255,255,255,.7);">
+        📌 Your progress has been saved. Resume where you left off.
+      </div>
+    </div>
+
+    <!-- Outcomes -->
+    <div id="outcomes">
+      <div class="section-hd">Learning Outcomes</div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><span class="outcome-icon">🔍</span><span class="outcome-text">Identify slip, trip, and fall hazards in the workplace</span></div>
+        <div class="outcome-item"><span class="outcome-icon">🗺️</span><span class="outcome-text">Recognise high-risk areas and conditions before moving</span></div>
+        <div class="outcome-item"><span class="outcome-icon">🧠</span><span class="outcome-text">Understand behavioural causes of STF incidents</span></div>
+        <div class="outcome-item"><span class="outcome-icon">🛡️</span><span class="outcome-text">Apply prevention measures in daily work routines</span></div>
+        <div class="outcome-item"><span class="outcome-icon">📐</span><span class="outcome-text">Use 5W2H thinking to systematically assess risks</span></div>
+        <div class="outcome-item"><span class="outcome-icon">✅</span><span class="outcome-text">Make safer decisions in real workplace situations</span></div>
+        <div class="outcome-item"><span class="outcome-icon">👟</span><span class="outcome-text">Learn about how footwear relates to STF</span></div>
+      </div>
+    </div>
+
+    <!-- ═══ CHAPTERS ═══ -->
+
+    <!-- Chapter 1 -->
+    <div class="chapter-section" id="ch-section-0">
+      <div class="chapter-hd">
+        <span class="chapter-num-badge">Chapter 1</span>
+        <span class="chapter-title">Understanding Slip, Trip &amp; Fall</span>
+      </div>
+      <div class="chapter-desc">
+        Learn the fundamental definitions of slips, trips, and falls — what they are, how they differ, and why they are among the most common workplace injuries. This chapter establishes the foundation for all subsequent learning.
+      </div>
+      <div class="video-wrap" style="position:relative">
+        <div class="video-label">
+          <div class="video-label-left"><div class="video-dot"></div> Chapter 1 Video</div>
+          <span style="font-size:.75rem;opacity:.7">~10 min</span>
+        </div>
+        <div style="position:relative;width:100%;aspect-ratio:16/9;">
+          <iframe
+            src="https://www.youtube.com/embed/U7uSVZezDyA?enablejsapi=1&rel=0&modestbranding=1"
+            style="width:100%;height:100%;border:none;display:block;"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div style="padding:8px 14px;background:#0c160c;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:.75rem;color:rgba(255,255,255,.5);">Understanding STF — Chapter 1 Video</span>
+          <button onclick="markVideoWatched(0)" style="background:rgba(141,198,63,.85);border:none;padding:5px 14px;border-radius:5px;color:#1e4d1e;font-weight:700;cursor:pointer;font-size:.78rem;">
+            ✓ Mark as Watched
+          </button>
+        </div>
+        <div class="video-done-badge" id="vid-done-0">✓ Watched</div>
+      </div>
+      <div class="mcq-section" id="mcq-0">
+        <div class="mcq-hd">
+          <div class="mcq-title">📝 Chapter 1 Quiz</div>
+          <div class="mcq-pass-req">Pass: ≥ 70% (3/5)</div>
+        </div>
+        <!-- Questions populated by JS -->
+        <div id="questions-0"></div>
+        <div class="mcq-submit">
+          <button class="btn-submit-quiz" id="submit-0">Submit Answers</button>
+          <button class="btn-retry" id="retry-0">↻ Retry</button>
+        </div>
+        <div class="quiz-result" id="result-0"></div>
+        <button class="unlock-next" id="unlock-1">Continue to Chapter 2 →</button>
+      </div>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="chapter-section locked-section" id="ch-section-1">
+      <div class="chapter-hd">
+        <span class="chapter-num-badge">Chapter 2</span>
+        <span class="chapter-title">Recognising STF Hazards</span>
+      </div>
+      <div class="chapter-desc">
+        Explore the What, Where, and When of STF hazards. Learn to identify wet surfaces, obstructions, uneven terrain, and the conditions under which these hazards become most dangerous.
+      </div>
+      <div class="video-wrap">
+        <div class="video-label">
+          <div class="video-label-left"><div class="video-dot"></div> Chapter 2 Video</div>
+          <span style="font-size:.75rem;opacity:.7">~10 min</span>
+        </div>
+        <div class="video-placeholder">
+          <div class="video-placeholder-icon">🎬</div>
+          <div class="video-placeholder-text">Recognising Hazards — Placeholder Video</div>
+        </div>
+        <div class="video-done-badge" id="vid-done-1">✓ Watched</div>
+      </div>
+      <div class="mcq-section" id="mcq-1">
+        <div class="mcq-hd">
+          <div class="mcq-title">📝 Chapter 2 Quiz</div>
+          <div class="mcq-pass-req">Pass: ≥ 70% (3/5)</div>
+        </div>
+        <div id="questions-1"></div>
+        <div class="mcq-submit">
+          <button class="btn-submit-quiz" id="submit-1">Submit Answers</button>
+          <button class="btn-retry" id="retry-1">↻ Retry</button>
+        </div>
+        <div class="quiz-result" id="result-1"></div>
+        <button class="unlock-next" id="unlock-2">Continue to Chapter 3 →</button>
+      </div>
+    </div>
+
+    <!-- Chapter 3 — PROVIDED VIDEO + MCQs -->
+    <div class="chapter-section locked-section" id="ch-section-2">
+      <div class="chapter-hd">
+        <span class="chapter-num-badge">Chapter 3</span>
+        <span class="chapter-title">Risk &amp; Behaviour</span>
+      </div>
+      <div class="chapter-desc">
+        Understand the human side of STF incidents. Explore how behaviours like rushing, multitasking, and distraction — alongside environmental factors — contribute to accidents. Discover why hazards are seen but not acted on.
+      </div>
+      <div class="video-wrap" style="position:relative">
+        <div class="video-label">
+          <div class="video-label-left"><div class="video-dot"></div> Chapter 3 Video — Risk &amp; Behaviour</div>
+          <span style="font-size:.75rem;opacity:.7">~5 min</span>
+        </div>
+        <div style="position:relative;width:100%;aspect-ratio:16/9;">
+          <iframe id="yt-vid-2"
+            src="https://www.youtube.com/embed/97D7lQsIqcI?enablejsapi=1&rel=0&modestbranding=1"
+            style="width:100%;height:100%;border:none;display:block;"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div style="padding:8px 14px;background:#0f1e2e;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:.75rem;color:rgba(255,255,255,.5);">Risk & Behaviour — Chapter 3 Video</span>
+          <button onclick="markVideoWatched(2)" style="background:rgba(245,166,35,.85);border:none;padding:5px 14px;border-radius:5px;color:#1a3a5c;font-weight:700;cursor:pointer;font-size:.78rem;">
+            ✓ Mark as Watched
+          </button>
+        </div>
+        <div class="video-done-badge" id="vid-done-2">✓ Watched</div>
+      </div>
+      <div class="mcq-section" id="mcq-2">
+        <div class="mcq-hd">
+          <div class="mcq-title">📝 Chapter 3 Quiz — Risk &amp; Behaviour</div>
+          <div class="mcq-pass-req">Pass: ≥ 70% (3/5)</div>
+        </div>
+        <div id="questions-2"></div>
+        <div class="mcq-submit">
+          <button class="btn-submit-quiz" id="submit-2">Submit Answers</button>
+          <button class="btn-retry" id="retry-2">↻ Retry</button>
+        </div>
+        <div class="quiz-result" id="result-2"></div>
+        <button class="unlock-next" id="unlock-3">Continue to Chapter 4 →</button>
+      </div>
+    </div>
+
+    <!-- Chapter 4 -->
+    <div class="chapter-section locked-section" id="ch-section-3">
+      <div class="chapter-hd">
+        <span class="chapter-num-badge">Chapter 4</span>
+        <span class="chapter-title">Prevention in Daily Work</span>
+      </div>
+      <div class="chapter-desc">
+        Learn the practical steps for preventing STF incidents as part of everyday work routines. This chapter covers walkway checks, surface maintenance, housekeeping standards, hazard reporting, and the use of appropriate footwear and PPE.
+      </div>
+      <div class="video-wrap">
+        <div class="video-label">
+          <div class="video-label-left"><div class="video-dot"></div> Chapter 4 Video</div>
+          <span style="font-size:.75rem;opacity:.7">~12 min</span>
+        </div>
+        <div class="video-placeholder">
+          <div class="video-placeholder-icon">🎬</div>
+          <div class="video-placeholder-text">Prevention Strategies — Placeholder Video</div>
+        </div>
+        <div class="video-done-badge" id="vid-done-3">✓ Watched</div>
+      </div>
+      <div class="mcq-section" id="mcq-3">
+        <div class="mcq-hd">
+          <div class="mcq-title">📝 Chapter 4 Quiz</div>
+          <div class="mcq-pass-req">Pass: ≥ 70% (3/5)</div>
+        </div>
+        <div id="questions-3"></div>
+        <div class="mcq-submit">
+          <button class="btn-submit-quiz" id="submit-3">Submit Answers</button>
+          <button class="btn-retry" id="retry-3">↻ Retry</button>
+        </div>
+        <div class="quiz-result" id="result-3"></div>
+        <button class="unlock-next" id="unlock-4">Continue to Chapter 5 →</button>
+      </div>
+    </div>
+
+    <!-- Chapter 5 -->
+    <div class="chapter-section locked-section" id="ch-section-4">
+      <div class="chapter-hd">
+        <span class="chapter-num-badge">Chapter 5</span>
+        <span class="chapter-title">Decision Making (5W2H)</span>
+      </div>
+      <div class="chapter-desc">
+        Apply structured 5W2H thinking to real workplace scenarios. This final chapter challenges you to integrate everything you have learned and make sound safety decisions under realistic conditions.
+      </div>
+      <div class="video-wrap">
+        <div class="video-label">
+          <div class="video-label-left"><div class="video-dot"></div> Chapter 5 Video</div>
+          <span style="font-size:.75rem;opacity:.7">~13 min</span>
+        </div>
+        <div class="video-placeholder">
+          <div class="video-placeholder-icon">🎬</div>
+          <div class="video-placeholder-text">5W2H Decision Making — Placeholder Video</div>
+        </div>
+        <div class="video-done-badge" id="vid-done-4">✓ Watched</div>
+      </div>
+      <div class="mcq-section" id="mcq-4">
+        <div class="mcq-hd">
+          <div class="mcq-title">📝 Chapter 5 Quiz</div>
+          <div class="mcq-pass-req">Pass: ≥ 70% (3/5)</div>
+        </div>
+        <div id="questions-4"></div>
+        <div class="mcq-submit">
+          <button class="btn-submit-quiz" id="submit-4">Submit Answers</button>
+          <button class="btn-retry" id="retry-4">↻ Retry</button>
+        </div>
+        <div class="quiz-result" id="result-4"></div>
+        <button class="unlock-next" id="unlock-5">Continue to Chapter 6 →</button>
+      </div>
+    </div>
+
+    <!-- Chapter 6 — Footwear -->
+    <div class="chapter-section locked-section" id="ch-section-5">
+      <div class="chapter-hd">
+        <span class="chapter-num-badge">Chapter 6</span>
+        <span class="chapter-title">Footwear</span>
+      </div>
+      <div class="chapter-desc">
+        Highlight how footwear directly affects stability and safety in real work environments. Reinforce the importance of choosing, maintaining, and using appropriate footwear to reduce the risk of slip, trip, and fall incidents.
+      </div>
+      <div class="video-wrap" style="position:relative">
+        <div class="video-label">
+          <div class="video-label-left"><div class="video-dot"></div> Chapter 6 Video</div>
+          <span style="font-size:.75rem;opacity:.7">~10 min</span>
+        </div>
+        <div class="video-placeholder">
+          <div class="video-placeholder-icon">🎬</div>
+          <div class="video-placeholder-text">Footwear & Safety — Placeholder Video</div>
+          <div style="font-size:.75rem;opacity:.4">Replace with actual video URL</div>
+        </div>
+        <div class="video-done-badge" id="vid-done-5">✓ Watched</div>
+      </div>
+      <div class="mcq-section" id="mcq-5">
+        <div class="mcq-hd">
+          <div class="mcq-title">📝 Chapter 6 Quiz — Footwear</div>
+          <div class="mcq-pass-req">Pass: ≥ 70% (3/5)</div>
+        </div>
+        <div id="questions-5"></div>
+        <div class="mcq-submit">
+          <button class="btn-submit-quiz" id="submit-5">Submit Answers</button>
+          <button class="btn-retry" id="retry-5">↻ Retry</button>
+        </div>
+        <div class="quiz-result" id="result-5"></div>
+        <button class="unlock-next" id="unlock-pdf" onclick="scrollToPdf()">View Course Summary →</button>
+      </div>
+    </div>
+
+    <!-- Completion Screen -->
+    <div id="completion-screen">
+      <div class="comp-icon">🏆</div>
+      <div class="comp-title">Module Completed!</div>
+      <div class="comp-sub">Congratulations! You have successfully completed the Slip, Trip &amp; Fall Prevention module.</div>
+      <div class="comp-stats">
+        <div class="comp-stat">
+          <div class="comp-stat-val" id="comp-score">—</div>
+          <div class="comp-stat-lbl">Final Score</div>
+        </div>
+        <div class="comp-stat">
+          <div class="comp-stat-val" id="comp-time">—</div>
+          <div class="comp-stat-lbl">Time Spent</div>
+        </div>
+        <div class="comp-stat">
+          <div class="comp-stat-val">6/6</div>
+          <div class="comp-stat-lbl">Chapters Done</div>
+        </div>
+      </div>
+      <div class="comp-timestamp" id="comp-timestamp"></div>
+      <div class="comp-btns">
+        <a href="index.html" class="comp-btn comp-btn-primary">← Return to Dashboard</a>
+        <button class="comp-btn comp-btn-accent" onclick="printCertificate()">🖨 Print Certificate</button>
+        <a href="STF_LMS_One_Page_Summary_v2.pdf" download class="comp-btn" style="background:#27ae60;color:#fff;">⬇ Download Summary</a>
+      </div>
+    </div>
+
+    <!-- PDF Summary — always at bottom -->
+    <div id="pdf-section">
+      <div class="section-hd">Download Course Summary</div>
+      <div class="pdf-card">
+        <div class="pdf-icon">📄</div>
+        <div class="pdf-info">
+          <h3>STF Prevention — One Page Summary</h3>
+          <p>Download this one-page summary to recap key learning points from this module. Covers all 6 chapters: hazard types, risk factors, prevention strategies, the 5W2H framework, and footwear safety.</p>
+          <div class="pdf-viewed-badge" id="pdf-viewed-badge">✓ Downloaded</div>
+        </div>
+        <a href="STF_LMS_One_Page_Summary_v2.pdf" download
+           class="btn-download" id="btn-pdf-download"
+           onclick="markPdfViewed()">
+          ⬇ Download PDF
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<!-- Skip warning toast -->
+<div id="skip-toast">⚠️ Please complete the current chapter first before moving forward.</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  DATA — MCQ BANK
+//  ✅ Chapter 3 uses the provided real questions (Q11–Q15)
+//  Chapters 1,2,4,5 use structured placeholder questions
+// ═══════════════════════════════════════════════════════
+const MCQ_DATA = [
+  // Chapter 1 — Understanding STF
+  {
+    title: "Understanding Slip, Trip & Fall",
+    questions: [
+      {
+        text: "What best describes a 'slip' in workplace safety?",
+        options: ["Loss of balance due to an obstacle", "Loss of traction on wet or smooth surfaces", "Inability to recover balance after stumbling", "Tripping over an uneven surface"],
+        correct: 1
+      },
+      {
+        text: "Which of the following is classified as a 'trip'?",
+        options: ["Stepping on a wet floor", "Catching a foot on a raised cable", "Sliding on a polished surface", "Falling from a ladder"],
+        correct: 1
+      },
+      {
+        text: "A fall is defined as:",
+        options: ["Losing grip on a handrail", "Slipping on a wet floor", "Inability to recover balance, resulting in injury", "Tripping over clutter"],
+        correct: 2
+      },
+      {
+        text: "Which hazard type is responsible for the most STF incidents in workplaces?",
+        options: ["Falling objects", "Wet or contaminated floors", "Electrical hazards", "Working at heights"],
+        correct: 1
+      },
+      {
+        text: "What is the first step when you encounter a wet floor spill at work?",
+        options: ["Walk around it quickly", "Place a warning sign and report it immediately", "Wait for someone else to handle it", "Clean it only if you have time"],
+        correct: 1
+      }
+    ]
+  },
+
+  // Chapter 2 — Recognising Hazards
+  {
+    title: "Recognising STF Hazards",
+    questions: [
+      {
+        text: "Which area is considered highest-risk for STF incidents?",
+        options: ["Office meeting rooms", "High-traffic walkways, entrances, and staircases", "Storage rooms with proper shelving", "Open outdoor car parks"],
+        correct: 1
+      },
+      {
+        text: "When is the risk of STF highest during a typical workday?",
+        options: ["During scheduled breaks", "After cleaning, during rain, or in low-light conditions", "During safety briefings", "When workers are well-rested"],
+        correct: 1
+      },
+      {
+        text: "Which of the following is NOT a common STF hazard?",
+        options: ["Trailing cables across a walkway", "A clearly marked, dry, flat floor", "Uneven floor surfaces near a staircase", "Wet floors after cleaning"],
+        correct: 1
+      },
+      {
+        text: "What should you do when you identify a trip hazard such as a loose cable?",
+        options: ["Step over it carefully every time", "Leave it — maintenance will fix it", "Tape it down or report it for immediate action", "Cover it with a mat temporarily"],
+        correct: 2
+      },
+      {
+        text: "Poor lighting in a work area increases STF risk because:",
+        options: ["It creates electrical hazards", "Workers cannot see hazards clearly on the floor", "Bright areas are slippery", "It reduces body temperature"],
+        correct: 1
+      }
+    ]
+  },
+
+  // Chapter 3 — Risk & Behaviour (PROVIDED REAL MCQs — Q11–Q15)
+  {
+    title: "Risk & Behaviour",
+    questions: [
+      {
+        text: "Q11. Which group is more at risk due to unfamiliarity?",
+        options: ["Managers", "Visitors", "New workers", "Supervisors"],
+        correct: 2
+      },
+      {
+        text: "Q12. Which behaviour increases STF risk?",
+        options: ["Walking slowly", "Reporting hazards", "Rushing and multitasking", "Wearing safety shoes"],
+        correct: 2
+      },
+      {
+        text: "Q13. Why are small hazards often ignored?",
+        options: ["Workers don't see them", "Workers underestimate their risk", "They are not dangerous", "They are temporary"],
+        correct: 1
+      },
+      {
+        text: "Q14. Which environmental factor increases STF risk?",
+        options: ["Clean workspace", "Good lighting", "Poor housekeeping", "Proper signage"],
+        correct: 2
+      },
+      {
+        text: "Q15. What does 'seen but not acted on' mean?",
+        options: ["Hazards are invisible", "Hazards are reported immediately", "Hazards are noticed but ignored", "Hazards are removed quickly"],
+        correct: 2
+      }
+    ]
+  },
+
+  // Chapter 4 — Prevention
+  {
+    title: "Prevention in Daily Work",
+    questions: [
+      {
+        text: "What is the most effective first step before moving through a work area?",
+        options: ["Look at your phone for directions", "Check that your path is clear and the surface is stable", "Walk as quickly as possible", "Ask a colleague to guide you"],
+        correct: 1
+      },
+      {
+        text: "Which of the following PPE is most relevant for preventing slips?",
+        options: ["Hard hat", "Anti-slip safety footwear", "High-visibility vest", "Safety gloves"],
+        correct: 1
+      },
+      {
+        text: "Good housekeeping prevents STF incidents by:",
+        options: ["Making the workplace look clean for audits", "Removing clutter, spills, and obstructions from walkways", "Reducing the need for warning signs", "Keeping tools accessible anywhere"],
+        correct: 1
+      },
+      {
+        text: "A simple daily check for STF prevention includes verifying that:",
+        options: ["Your shift starts on time", "Path is clear, surface is stable, visibility is good", "Colleagues are wearing hard hats", "Emergency exits are not blocked"],
+        correct: 1
+      },
+      {
+        text: "Why is immediate hazard reporting critical to STF prevention?",
+        options: ["It satisfies the supervisor", "It allows hazards to be controlled before someone is injured", "It is required only for serious hazards", "It demonstrates compliance for audits"],
+        correct: 1
+      }
+    ]
+  },
+
+  // Chapter 5 — 5W2H
+  {
+    title: "Decision Making (5W2H)",
+    questions: [
+      {
+        text: "In the 5W2H framework, 'What' refers to:",
+        options: ["Who is responsible for safety", "What the hazard is", "When the risk is highest", "What PPE to wear"],
+        correct: 1
+      },
+      {
+        text: "Which question in 5W2H helps identify the most vulnerable workers?",
+        options: ["What is the hazard?", "Where is it located?", "Who is affected?", "How can it be controlled?"],
+        correct: 2
+      },
+      {
+        text: "The 'Why' in 5W2H helps you:",
+        options: ["Identify the location of the hazard", "Understand why the hazard exists so it can be removed at source", "Decide who to report to", "Measure the size of the hazard"],
+        correct: 1
+      },
+      {
+        text: "The 'How serious is the impact?' question in 5W2H relates to:",
+        options: ["Estimating repair costs", "Assessing the severity of potential injury from the hazard", "Documenting incident statistics", "Counting the number of workers exposed"],
+        correct: 1
+      },
+      {
+        text: "Using 5W2H thinking, a worker notices a wet patch at a staircase entrance after rain. The BEST immediate action is to:",
+        options: ["Note it in the next weekly meeting", "Walk around it and continue working", "Place a warning sign and report to supervisor immediately", "Wait to see if someone else handles it"],
+        correct: 2
+      }
+    ]
+  },
+
+  // Chapter 6 — Footwear
+  {
+    title: "Footwear",
+    questions: [
+      {
+        text: "Q1. What is the main function of footwear in preventing slip, trip, and fall incidents?",
+        options: ["To improve speed of movement", "To provide grip and stability on surfaces", "To reduce fatigue only", "To replace the need for awareness"],
+        correct: 1
+      },
+      {
+        text: "Q2. Where does footwear become especially important for safety?",
+        options: ["In areas with stable and dry surfaces", "In environments where surfaces may be wet, oily, or dusty", "In office settings only", "In low-traffic areas"],
+        correct: 1
+      },
+      {
+        text: "Q3. When is footwear most likely to be less effective?",
+        options: ["When workers are stationary", "When surfaces remain unchanged", "When conditions change throughout the day (e.g. wet or dusty surfaces)", "During short tasks"],
+        correct: 2
+      },
+      {
+        text: "Q4. Why does worn footwear increase the risk of slipping?",
+        options: ["It increases comfort", "It reduces the effectiveness of the sole's grip on surfaces", "It improves flexibility", "It slows down movement"],
+        correct: 1
+      },
+      {
+        text: "Q5. How should workers manage footwear to maintain safety?",
+        options: ["Use the same footwear regardless of condition", "Focus only on walking carefully", "Regularly check and replace footwear when grip is reduced", "Avoid all high-risk areas"],
+        correct: 2
+      }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+const state = {
+  started: false,
+  timerInterval: null,
+  elapsedSeconds: 0,
+  chapters: MCQ_DATA.map(() => ({
+    status: 'locked',       // locked | notstarted | inprogress | passed | failed
+    videoWatched: false,
+    quizSubmitted: false,
+    quizPassed: false,
+    score: null,
+    attempts: 0
+  })),
+  pdfViewed: false,
+  completed: false
+};
+// Unlock chapter 0 on load
+state.chapters[0].status = 'notstarted';
+
+// ═══════════════════════════════════════════════════════
+//  TIMER
+// ═══════════════════════════════════════════════════════
+function startTimer() {
+  if (state.timerInterval) return;
+  state.timerInterval = setInterval(() => {
+    state.elapsedSeconds++;
+    const m = String(Math.floor(state.elapsedSeconds / 60)).padStart(2,'0');
+    const s = String(state.elapsedSeconds % 60).padStart(2,'0');
+    document.getElementById('elapsed-time').textContent = m + ':' + s;
+  }, 1000);
+}
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return m + 'min ' + String(s).padStart(2,'0') + 's';
+}
+
+// ═══════════════════════════════════════════════════════
+//  BUILD SIDEBAR
+// ═══════════════════════════════════════════════════════
+const chapterNames = [
+  "Understanding STF",
+  "Recognising Hazards",
+  "Risk & Behaviour",
+  "Prevention",
+  "Decision Making (5W2H)",
+  "Footwear"
+];
+
+function buildSidebar() {
+  const container = document.getElementById('sb-chapters');
+  container.innerHTML = '';
+  state.chapters.forEach((ch, i) => {
+    const div = document.createElement('div');
+    div.className = 'sb-chapter' + (ch.status === 'locked' ? ' locked' : '') + (i === getActiveChapter() ? ' active' : '') + (ch.quizPassed ? ' passed' : '');
+    div.innerHTML = `
+      <div class="ch-num">${ch.quizPassed ? '✓' : (i+1)}</div>
+      <div class="ch-info">
+        <div class="ch-name">${chapterNames[i]}</div>
+        <div class="ch-status status-${getStatusClass(ch)}">${getStatusLabel(ch)}</div>
+      </div>
+    `;
+    div.addEventListener('click', () => {
+      if (ch.status === 'locked') { showSkipWarning(); return; }
+      document.getElementById('ch-section-' + i).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    container.appendChild(div);
+  });
+}
+
+function getActiveChapter() {
+  for (let i = state.chapters.length - 1; i >= 0; i--) {
+    if (state.chapters[i].status !== 'locked') return i;
+  }
+  return 0;
+}
+
+function getStatusClass(ch) {
+  if (ch.status === 'locked')   return 'locked';
+  if (ch.quizPassed)            return 'passed';
+  if (ch.quizSubmitted)         return 'failed';
+  if (ch.videoWatched)          return 'inprogress';
+  return 'notstarted';
+}
+
+function getStatusLabel(ch) {
+  if (ch.status === 'locked')   return '🔒 Locked';
+  if (ch.quizPassed)            return '✓ Completed (' + ch.score + '%)';
+  if (ch.quizSubmitted)         return '✗ Retry Required';
+  if (ch.videoWatched)          return '◉ In Progress';
+  return '○ Not Started';
+}
+
+// ═══════════════════════════════════════════════════════
+//  BUILD MCQs
+// ═══════════════════════════════════════════════════════
+function buildAllQuizzes() {
+  MCQ_DATA.forEach((chapter, chIdx) => {
+    const container = document.getElementById('questions-' + chIdx);
+    if (!container) return;
+    container.innerHTML = '';
+    chapter.questions.forEach((q, qIdx) => {
+      const block = document.createElement('div');
+      block.className = 'question-block';
+      block.innerHTML = `
+        <div class="q-num">Question ${qIdx + 1} of ${chapter.questions.length}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="options" id="opts-${chIdx}-${qIdx}">
+          ${q.options.map((opt, oIdx) => `
+            <label class="option" id="opt-${chIdx}-${qIdx}-${oIdx}">
+              <input type="radio" name="q-${chIdx}-${qIdx}" value="${oIdx}"> ${opt}
+            </label>
+          `).join('')}
+        </div>
+        <div class="q-feedback" id="fb-${chIdx}-${qIdx}"></div>
+      `;
+      container.appendChild(block);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  QUIZ LOGIC
+// ═══════════════════════════════════════════════════════
+function attachQuizHandlers() {
+  MCQ_DATA.forEach((chapter, chIdx) => {
+    const submitBtn = document.getElementById('submit-' + chIdx);
+    const retryBtn  = document.getElementById('retry-' + chIdx);
+    if (!submitBtn) return;
+
+    submitBtn.addEventListener('click', () => submitQuiz(chIdx));
+    retryBtn.addEventListener('click',  () => resetQuiz(chIdx));
+  });
+}
+
+function submitQuiz(chIdx) {
+  const chapter = MCQ_DATA[chIdx];
+  let correct = 0;
+
+  // ── Step 1: check all answered BEFORE touching the DOM ──
+  let allAnswered = true;
+  chapter.questions.forEach((q, qIdx) => {
+    const radios = document.querySelectorAll(`input[name="q-${chIdx}-${qIdx}"]`);
+    let selected = null;
+    radios.forEach(r => { if (r.checked) selected = parseInt(r.value); });
+    if (selected === null) allAnswered = false;
+  });
+
+  if (!allAnswered) {
+    alert('Please answer all questions before submitting.');
+    return;
+  }
+
+  // ── Step 2: score and apply feedback ──
+  chapter.questions.forEach((q, qIdx) => {
+    const radios = document.querySelectorAll(`input[name="q-${chIdx}-${qIdx}"]`);
+    let selected = null;
+    radios.forEach(r => { if (r.checked) selected = parseInt(r.value); });
+
+    q.options.forEach((_, oIdx) => {
+      const optEl = document.getElementById(`opt-${chIdx}-${qIdx}-${oIdx}`);
+      optEl.classList.add('disabled');
+      if (oIdx === q.correct) optEl.classList.add('correct');
+      if (oIdx === selected && selected !== q.correct) optEl.classList.add('incorrect');
+    });
+
+    const fb = document.getElementById(`fb-${chIdx}-${qIdx}`);
+    if (selected === q.correct) {
+      correct++;
+      fb.textContent = '✓ Correct!';
+      fb.className = 'q-feedback show fb-correct';
+    } else {
+      fb.textContent = `✗ Incorrect. The correct answer is: "${q.options[q.correct]}"`;
+      fb.className = 'q-feedback show fb-incorrect';
+    }
+  });
+
+  const pct = Math.round((correct / chapter.questions.length) * 100);
+  const passed = pct >= 70;
+
+  state.chapters[chIdx].quizSubmitted = true;
+  state.chapters[chIdx].quizPassed    = passed;
+  state.chapters[chIdx].score         = pct;
+  state.chapters[chIdx].attempts++;
+
+  const resultEl = document.getElementById('result-' + chIdx);
+  resultEl.className = 'quiz-result show ' + (passed ? 'pass' : 'fail');
+  resultEl.innerHTML = passed
+    ? `🎉 Passed! You scored <strong>${pct}%</strong> (${correct}/${chapter.questions.length}). Well done!`
+    : `✗ You scored <strong>${pct}%</strong> (${correct}/${chapter.questions.length}). You need ≥70% to pass. Please retry.`;
+
+  document.getElementById('submit-' + chIdx).disabled = true;
+
+  if (!passed) {
+    document.getElementById('retry-' + chIdx).classList.add('show');
+  } else {
+    if (chIdx < 5) {
+      // Unlock next chapter directly — no button click needed
+      const unlockBtn = document.getElementById('unlock-' + (chIdx + 1));
+      if (unlockBtn) unlockBtn.classList.add('show');
+    } else {
+      // Last chapter — show PDF button
+      const pdfBtn = document.getElementById('unlock-pdf');
+      if (pdfBtn) pdfBtn.classList.add('show');
+    }
+  }
+
+  updateProgress();
+  buildSidebar();
+}
+
+function resetQuiz(chIdx) {
+  const chapter = MCQ_DATA[chIdx];
+  chapter.questions.forEach((q, qIdx) => {
+    const radios = document.querySelectorAll(`input[name="q-${chIdx}-${qIdx}"]`);
+    radios.forEach(r => { r.checked = false; });
+    q.options.forEach((_, oIdx) => {
+      const optEl = document.getElementById(`opt-${chIdx}-${qIdx}-${oIdx}`);
+      optEl.className = 'option';
+    });
+    const fb = document.getElementById(`fb-${chIdx}-${qIdx}`);
+    fb.className = 'q-feedback';
+    fb.textContent = '';
+  });
+
+  state.chapters[chIdx].quizSubmitted = false;
+  state.chapters[chIdx].quizPassed    = false;
+
+  document.getElementById('submit-' + chIdx).disabled = false;
+  document.getElementById('result-' + chIdx).className = 'quiz-result';
+  document.getElementById('retry-' + chIdx).classList.remove('show');
+
+  buildSidebar();
+}
+
+// ═══════════════════════════════════════════════════════
+//  UNLOCK NEXT CHAPTER
+// ═══════════════════════════════════════════════════════
+function setupUnlockButtons() {
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.getElementById('unlock-' + i);
+    if (!btn) continue;
+    btn.addEventListener('click', () => unlockChapter(i));
+  }
+}
+
+function unlockChapter(chIdx) {
+  state.chapters[chIdx].status = 'notstarted';
+  const section = document.getElementById('ch-section-' + chIdx);
+  if (section) {
+    section.classList.remove('locked-section');
+    buildSidebar();
+    setTimeout(() => {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+  // Hide the unlock button that triggered this
+  const unlockBtn = document.getElementById('unlock-' + chIdx);
+  if (unlockBtn) unlockBtn.classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════════════
+//  VIDEO — Mark watched handlers
+// ═══════════════════════════════════════════════════════
+function markVideoWatched(chIdx) {
+  state.chapters[chIdx].videoWatched = true;
+  const badge = document.getElementById('vid-done-' + chIdx);
+  if (badge) badge.classList.add('show');
+  buildSidebar();
+}
+
+// Attach to real video elements if present
+function attachVideoHandlers() {
+  MCQ_DATA.forEach((_, i) => {
+    const vid = document.getElementById('vid-' + i);
+    if (vid) {
+      vid.addEventListener('ended', () => markVideoWatched(i));
+      vid.addEventListener('timeupdate', function() {
+        if (this.currentTime / this.duration > 0.8) markVideoWatched(i);
+      });
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  PDF
+// ═══════════════════════════════════════════════════════
+function markPdfViewed() {
+  state.pdfViewed = true;
+  document.getElementById('pdf-viewed-badge').classList.add('show');
+  checkCompletion();
+}
+
+function scrollToPdf() {
+  document.getElementById('pdf-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═══════════════════════════════════════════════════════
+//  PROGRESS
+// ═══════════════════════════════════════════════════════
+function updateProgress() {
+  const passed = state.chapters.filter(c => c.quizPassed).length;
+  const pct = Math.round((passed / state.chapters.length) * 100);
+  document.getElementById('sb-pct').textContent = pct + '%';
+  document.getElementById('sb-prog-fill').style.width = pct + '%';
+
+  const scores = state.chapters.filter(c => c.score !== null).map(c => c.score);
+  if (scores.length > 0) {
+    const avg = Math.round(scores.reduce((a,b) => a+b, 0) / scores.length);
+    document.getElementById('sb-score').textContent = avg + '%';
+  }
+
+  if (passed === state.chapters.length && state.pdfViewed && !state.completed) {
+    checkCompletion();
+  }
+}
+
+function checkCompletion() {
+  const allPassed = state.chapters.every(c => c.quizPassed);
+  if (allPassed && state.pdfViewed && !state.completed) {
+    state.completed = true;
+    showCompletion();
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  COMPLETION
+// ═══════════════════════════════════════════════════════
+function showCompletion() {
+  clearInterval(state.timerInterval);
+  const scores = state.chapters.map(c => c.score);
+  const avg = Math.round(scores.reduce((a,b) => a+b,0) / scores.length);
+
+  document.getElementById('comp-score').textContent = avg + '%';
+  document.getElementById('comp-time').textContent = formatTime(state.elapsedSeconds);
+
+  const now = new Date();
+  document.getElementById('comp-timestamp').textContent =
+    'Completed on ' + now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }) +
+    ' at ' + now.toLocaleTimeString('en-SG', { hour:'2-digit', minute:'2-digit' });
+
+  const compScreen = document.getElementById('completion-screen');
+  compScreen.classList.add('show');
+  setTimeout(() => {
+    compScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 300);
+}
+
+function printCertificate() {
+  const scores = state.chapters.map(c => c.score);
+  const avg = Math.round(scores.reduce((a,b) => a+b,0) / scores.length);
+  const now = new Date();
+  const win = window.open('', '_blank');
+  win.document.write(`
+    <html><head><title>Completion Certificate</title>
+    <style>
+      body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 60px; background: #fff; }
+      h1 { color: #1a3a5c; font-size: 2.5rem; margin-bottom: 10px; }
+      .sub { color: #6b7c93; font-size: 1.1rem; margin-bottom: 40px; }
+      .award { font-size: 5rem; margin: 20px 0; }
+      .name { font-size: 1.6rem; font-weight: 700; color: #1a3a5c; margin: 20px 0; }
+      .course { font-size: 1.2rem; color: #e8490f; font-weight: 700; margin-bottom: 30px; }
+      .score { font-size: 1rem; color: #27ae60; font-weight: 600; margin-bottom: 8px; }
+      .date { font-size: .9rem; color: #6b7c93; margin-bottom: 40px; }
+      hr { border: 2px solid #f5a623; margin: 40px auto; width: 60%; }
+      .footer { font-size: .8rem; color: #aaa; }
+    </style>
+    </head><body>
+    <h1>Certificate of Completion</h1>
+    <div class="sub">AnjouHealth Training Portal</div>
+    <hr>
+    <div class="award">🏆</div>
+    <div class="name">James Tan</div>
+    <div class="sub">has successfully completed</div>
+    <div class="course">Slip, Trip & Fall Prevention</div>
+    <div class="score">Final Score: ${avg}% | Chapters: 6/6 | Time: ${formatTime(state.elapsedSeconds)}</div>
+    <div class="date">Date: ${now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' })}</div>
+    <hr>
+    <div class="footer">This certificate was generated by the WSH Training Portal</div>
+    </body></html>
+  `);
+  win.document.close();
+  win.print();
+}
+
+// ═══════════════════════════════════════════════════════
+//  SKIP WARNING
+// ═══════════════════════════════════════════════════════
+function showSkipWarning() {
+  const toast = document.getElementById('skip-toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════════════════════
+//  START MODULE
+// ═══════════════════════════════════════════════════════
+document.getElementById('btn-start-module').addEventListener('click', () => {
+  state.started = true;
+  startTimer();
+  document.getElementById('btn-start-module').textContent = '↓ Scroll to Begin';
+  document.getElementById('ch-section-0').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  buildSidebar();
+});
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+buildAllQuizzes();
+buildSidebar();
+attachQuizHandlers();
+setupUnlockButtons();
+attachVideoHandlers();
+
+// Attach btn-pdf-download listener if present
+const pdfBtn = document.getElementById('btn-pdf-download');
+if (pdfBtn) {
+  pdfBtn.addEventListener('click', markPdfViewed);
+}
+
+</script>
+</body>
+</html>
